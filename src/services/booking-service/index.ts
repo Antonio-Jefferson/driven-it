@@ -48,7 +48,7 @@ async function updateBooking(userId: number, bookingId: number, roomId: number) 
     throw cannotBookingError();
   }
 
-  return bookingRepository.updateBooking(bookingId, roomId);
+  return await bookingRepository.updateBooking(bookingId, roomId);
 }
 
 const bookingService = {
