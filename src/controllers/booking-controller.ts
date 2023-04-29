@@ -9,7 +9,7 @@ export async function createBooking(req: AuthenticatedRequest, res: Response, ne
   try {
     const bookings = await bookingService.createBooking(userId, Number(roomId));
 
-    res.status(httpStatus.OK).send({ BookingId: bookings.id });
+    res.status(httpStatus.OK).send({ bookingId: bookings.id });
   } catch (error) {
     next(error);
   }
@@ -36,7 +36,7 @@ export async function updateBooking(req: AuthenticatedRequest, res: Response, ne
     const bookings = await bookingService.updateBooking(userId, Number(bookingId), Number(roomId));
 
     res.status(httpStatus.CREATED).send({
-      BookingId: bookings.id,
+      bookingId: bookings.id,
     });
   } catch (error) {
     next(error);
