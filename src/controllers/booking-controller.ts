@@ -28,3 +28,19 @@ export async function findBookings(req: AuthenticatedRequest, res: Response, nex
     next(error);
   }
 }
+
+export async function updateBooking(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  const { userId } = req;
+  const { roomId } = req.body;
+  const { bookingId } = req.params;
+
+  try {
+    const bookings = await bookingService.updateBooking(userId, Number(bookingId), Number(roomId));
+
+    res.status(httpStatus.CREATED).send({
+      BookingId: bookings.id,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
