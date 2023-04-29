@@ -24,13 +24,6 @@ async function createBooking(userId: number, roomId: number) {
 }
 
 async function findBookings(userId: number) {
-  const ticket = await ticketService.getTicketByUserId(userId);
-  if (!ticket) throw notFoundError();
-
-  if (ticket.status === 'RESERVED' || ticket.TicketType.isRemote || !ticket.TicketType.includesHotel) {
-    throw cannotBookingError();
-  }
-
   const result = await bookingRepository.findBooking(userId);
   if (!result) throw notFoundError();
 
