@@ -31,29 +31,24 @@ async function findBookings(userId: number) {
 }
 
 async function updateBooking(userId: number, bookingId: number, roomId: number) {
-  const ticket = await ticketService.getTicketByUserId(userId);
-  if (!ticket) throw notFoundError();
+  const booking = await bookingRepository.findBookingByUserId(bookingId);
 
-  if (ticket.status === 'RESERVED' || ticket.TicketType.isRemote || !ticket.TicketType.includesHotel) {
+  if (!booking || booking.userId !== userId) {
     throw cannotBookingError();
   }
 
   const bookingRoomId = await bookingRepository.findByBookingRoomId(roomId);
   if (!bookingRoomId) throw notFoundError();
 
-  const roomIdExist = await bookingRepository.roomIdExist(roomId);
-  if (!roomIdExist) throw notFoundError();
+  const room = await bookingRepository.roomIdExist(roomId);
 
-  if (roomIdExist.capacity <= bookingRoomId.length) {
-    throw cannotBookingError();
-  }
-  const booking = await bookingRepository.findBookingByUserId(userId);
-
-  if (!booking || booking.userId !== userId) {
+  if (room.capacity <= bookingRoomId.length) {
     throw cannotBookingError();
   }
 
-  return await bookingRepository.updateBooking(bookingId, roomId);
+  const resultBokking = await bookingRepository.updateBooking(bookingId, roomId);
+  console.log({ bookingId: resultBokking.id });
+  return resultBokking;
 }
 
 const bookingService = {

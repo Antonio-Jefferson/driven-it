@@ -2,10 +2,14 @@ import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status';
 import { AuthenticatedRequest } from '@/middlewares';
 import bookingService from '@/services/booking-service';
+import { cannotEnrollBeforeStartDateError } from '@/errors';
 
 export async function createBooking(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const { userId } = req;
   const { roomId } = req.body;
+
+  if (!roomId || Number(roomId) <= 0) throw cannotEnrollBeforeStartDateError();
+
   try {
     const bookings = await bookingService.createBooking(userId, Number(roomId));
 

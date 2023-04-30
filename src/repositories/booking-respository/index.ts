@@ -32,10 +32,10 @@ async function findBooking(userId: number) {
   });
 }
 
-async function findBookingByUserId(userId: number) {
+async function findBookingByUserId(bookingId: number) {
   return await prisma.booking.findFirst({
     where: {
-      userId,
+      id: bookingId,
     },
   });
 }
