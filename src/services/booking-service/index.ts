@@ -32,22 +32,20 @@ async function findBookings(userId: number) {
 
 async function updateBooking(userId: number, bookingId: number, roomId: number) {
   const booking = await bookingRepository.findBookingByUserId(bookingId);
-
-  if (!booking || booking.userId !== userId) {
-    throw cannotBookingError();
-  }
+  if (!booking) throw notFoundError();
 
   const bookingRoomId = await bookingRepository.findByBookingRoomId(roomId);
   if (!bookingRoomId) throw notFoundError();
 
-  const room = await bookingRepository.roomIdExist(roomId);
+  const roomIdExist = await bookingRepository.roomIdExist(roomId);
+  if (!roomIdExist) throw notFoundError();
 
-  if (room.capacity <= bookingRoomId.length) {
+  if (roomIdExist.capacity <= bookingRoomId.length) {
     throw cannotBookingError();
   }
-
   const resultBokking = await bookingRepository.updateBooking(bookingId, roomId);
-  console.log({ bookingId: resultBokking.id });
+  if (!resultBokking) throw notFoundError();
+
   return resultBokking;
 }
 
