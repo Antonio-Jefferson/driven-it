@@ -268,7 +268,7 @@ describe('PUT /booking', () => {
 
       expect(response.status).toEqual(httpStatus.NOT_FOUND);
     });
-    it('should respond with status 404 when booking is invalid', async () => {
+    it('should respond status 403 if user has no reservation', async () => {
       const user = await createUser();
       const token = await generateValidToken(user);
       const enrollment = await createEnrollmentWithAddress(user);
@@ -285,7 +285,7 @@ describe('PUT /booking', () => {
         .set('Authorization', `Bearer ${token}`)
         .send({ roomId: room.id });
 
-      expect(response.status).toEqual(httpStatus.NOT_FOUND);
+      expect(response.status).toEqual(httpStatus.FORBIDDEN);
     });
     it('should respond with status 403 with a invalid body', async () => {
       const user = await createUser();
