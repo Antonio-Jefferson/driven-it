@@ -4,10 +4,10 @@ import ticketService from '@/services/tickets-service';
 import { notFoundError } from '@/errors';
 import enrollmentRepository from '@/repositories/enrollment-repository';
 
-describe('Tickets-Services', () => {
-  it('Get ticketTypes', async () => {
+describe('getTicketType function', () => {
+  it('should get ticketTypes', async () => {
     const mockTicketType = await mockTicketTypeReturn();
-    jest.spyOn(ticketsRepository, 'findTicketTypes').mockResolvedValue(mockTicketTypeReturn());
+    jest.spyOn(ticketsRepository, 'findTicketTypes').mockResolvedValue(mockTicketType);
 
     const resultTicketType = await ticketService.getTicketType();
 
@@ -47,6 +47,33 @@ describe('getTicketByUserId function', () => {
 
     jest.spyOn(enrollmentRepository, 'findWithAddressByUserId').mockResolvedValue(mockAddressReturn());
     jest.spyOn(ticketsRepository, 'findTicketByEnrollmentId').mockResolvedValue(null);
+
+    await expect(ticketService.getTicketByUserId(userId)).rejects.toEqual(notFoundError());
+  });
+});
+
+describe('createTicket function', () => {
+  it('should create ticket', async () => {
+    const userId = 1;
+    const ticketTypeId = 1;
+    const enrollment = mockAddressReturn();
+    const ticket = mockTicketByEnrollmentIdReturn();
+
+    jest.spyOn(enrollmentRepository, 'findWithAddressByUserId').mockResolvedValue(enrollment);
+
+    jest.spyOn(ticketsRepository, 'createTicket').mockResolvedValue(null);
+
+    jest.spyOn(ticketsRepository, 'findTicketByEnrollmentId').mockResolvedValue(ticket);
+
+    const resultTicket = await ticketService.createTicket(userId, ticketTypeId);
+
+    expect(resultTicket).toEqual(ticket);
+  });
+
+  it('should not found enrollment', async () => {
+    const userId = 1;
+
+    jest.spyOn(enrollmentRepository, 'findWithAddressByUserId').mockResolvedValue(null);
 
     await expect(ticketService.getTicketByUserId(userId)).rejects.toEqual(notFoundError());
   });
