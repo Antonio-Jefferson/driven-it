@@ -45,7 +45,7 @@ export async function createTicketTypeWithHotel() {
   });
 }
 
-export async function mockTicketTypeReturn(): Promise<TicketType[]> {
+export async function mockTicketTypeReturn() {
   return [
     {
       id: 1,
@@ -57,4 +57,55 @@ export async function mockTicketTypeReturn(): Promise<TicketType[]> {
       updatedAt: new Date(),
     },
   ];
+}
+
+export async function mockTicketRreturn() {
+  return {
+    id: 1,
+    ticketTypeId: 1,
+    enrollmentId: 1,
+    status: TicketStatus.PAID,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    Enrollment: {
+      id: 1,
+      name: 'Teste',
+      cpf: '000.000.000-00',
+      birthday: new Date(),
+      phone: '90000-0000',
+      userId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  };
+}
+
+export async function mockCardPaymentReturn() {
+  return {
+    issuer: '78946532131',
+    number: 123,
+    name: 'Teste',
+    expirationDate: new Date(),
+    cvv: 213,
+  };
+}
+
+export async function mockTicketType() {
+  return {
+    id: 1,
+    ticketTypeId: 1,
+    enrollmentId: 1,
+    status: TicketStatus.PAID,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    TicketType: {
+      id: 1,
+      name: 'Teste',
+      price: 300,
+      isRemote: false,
+      includesHotel: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  };
 }

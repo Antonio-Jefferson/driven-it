@@ -89,3 +89,16 @@ export function mockAddressReturn() {
     ],
   };
 }
+
+export function mockEnrollmentReturn() {
+  return {
+    id: 1,
+    name: 'John Doe',
+    cpf: '00898643115',
+    birthday: new Date(),
+    phone: '986855536',
+    userId: 1,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+}
