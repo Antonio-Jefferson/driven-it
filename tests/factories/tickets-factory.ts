@@ -109,3 +109,43 @@ export async function mockTicketType() {
     },
   };
 }
+
+export async function mockTicketTypeNotPaid() {
+  return {
+    id: 1,
+    ticketTypeId: 1,
+    enrollmentId: 1,
+    status: TicketStatus.RESERVED,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    TicketType: {
+      id: 1,
+      name: 'Teste',
+      price: 300,
+      isRemote: false,
+      includesHotel: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  };
+}
+
+export async function mockTicketTypeNotIncludesHotel() {
+  return {
+    id: 1,
+    ticketTypeId: 1,
+    enrollmentId: 1,
+    status: TicketStatus.PAID,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    TicketType: {
+      id: 1,
+      name: 'Teste',
+      price: 300,
+      isRemote: false,
+      includesHotel: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  };
+}
