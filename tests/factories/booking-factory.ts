@@ -80,3 +80,27 @@ export async function createBookingReturn() {
     updatedAt: new Date(),
   };
 }
+
+export async function mockRoomAllReturn() {
+  return {
+    id: 1,
+    Room: {
+      id: 1,
+      name: 'ze da manga',
+      capacity: 5,
+      hotelId: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  };
+}
+
+export async function mockBookingIdReturn() {
+  return {
+    id: 1,
+    userId: 1,
+    roomId: 1,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+}
